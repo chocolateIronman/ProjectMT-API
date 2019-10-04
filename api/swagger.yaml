@@ -1,0 +1,328 @@
+---
+swagger: "2.0"
+info:
+  description: "No description"
+  version: "1.0.0"
+  title: "ProjectMonitoringTool"
+  contact: {}
+host: "localhost:8080"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /project:
+    get:
+      tags:
+      - "Project"
+      summary: "Loads a list of projects"
+      operationId: "getProjects"
+      parameters: []
+      responses:
+        200:
+          description: "Status 200"
+        400:
+          description: "Status 400"
+      x-swagger-router-controller: "Project"
+    post:
+      tags:
+      - "Project"
+      summary: "Adds a project"
+      operationId: "createProject"
+      parameters: []
+      responses:
+        200:
+          description: "The project has been saved"
+        400:
+          description: "The project already exists"
+      x-swagger-router-controller: "Project"
+  /project/{ProjectID}:
+    get:
+      tags:
+      - "Project"
+      summary: "Loads a project"
+      operationId: "getProject"
+      parameters:
+      - name: "ProjectID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+        400:
+          description: "Status 400"
+      x-swagger-router-controller: "Project"
+    put:
+      tags:
+      - "Project"
+      summary: "Updates a project"
+      operationId: "editProject"
+      parameters:
+      - name: "ProjectID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+      x-swagger-router-controller: "Project"
+    delete:
+      tags:
+      - "Project"
+      summary: "Deletes a project"
+      operationId: "deleteProject"
+      parameters:
+      - name: "ProjectID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+      x-swagger-router-controller: "Project"
+  /tutor:
+    get:
+      tags:
+      - "Tutor"
+      summary: "Loads a list of tutors"
+      operationId: "getTutors"
+      produces:
+      - "application/json"
+      - "application/x-yaml"
+      - "application/xml"
+      - "text/xml"
+      parameters: 
+      - name: "tutorID"
+        in: "query"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Tutor"
+        400:
+          description: "Status 400"
+      x-swagger-router-controller: "Tutor"
+    post:
+      tags:
+      - "Tutor"
+      summary: "Adds a tutor"
+      operationId: "addTutor"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Tutor"
+      responses:
+        200:
+          description: "We added the tutor"
+          schema:
+            $ref: "#/definitions/Tutor"
+        400:
+          description: "We already added the tutor"
+      x-swagger-router-controller: "Tutor"
+  /tutor/{TutorID}:
+    get:
+      tags:
+      - "Tutor"
+      summary: "Loads a tutor"
+      operationId: "getTutor"
+      parameters:
+      - name: "TutorID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "The tutor exist in the database"
+        404:
+          description: "The tutor does not match the database"
+      x-swagger-router-controller: "Tutor"
+    put:
+      tags:
+      - "Tutor"
+      summary: "Stores a tutor"
+      operationId: "editTutor"
+      parameters:
+      - name: "TutorID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+        400:
+          description: "Status 400"
+      x-swagger-router-controller: "Tutor"
+    delete:
+      tags:
+      - "Tutor"
+      summary: "Deletes a tutor"
+      operationId: "deleteTutor"
+      parameters:
+      - name: "TutorID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+      x-swagger-router-controller: "Tutor"
+  /projectCategory:
+    get:
+      tags:
+      - "Category"
+      summary: "Loads a list of project categories"
+      operationId: "getCategories"
+      parameters: []
+      responses:
+        200:
+          description: "Status 200"
+        404:
+          description: "Status 404"
+      x-swagger-router-controller: "Category"
+    post:
+      tags:
+      - "Category"
+      summary: "Adds a project category"
+      operationId: "createCategory"
+      parameters: []
+      responses:
+        200:
+          description: "The category is created"
+        400:
+          description: "The category already exists"
+      x-swagger-router-controller: "Category"
+  /projectCategory/{categoryID}:
+    get:
+      tags:
+      - "Category"
+      summary: "Loads a project category"
+      operationId: "getCategory"
+      parameters:
+      - name: "categoryID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "The category exists"
+        404:
+          description: "The category doesn't exist"
+      x-swagger-router-controller: "Category"
+    delete:
+      tags:
+      - "Category"
+      summary: "Deletes a category"
+      operationId: "deleteCategory"
+      parameters:
+      - name: "categoryID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+      x-swagger-router-controller: "Category"
+  /projectTasks:
+    get:
+      tags:
+      - "Task"
+      summary: "Loads a list of project tasks"
+      operationId: "getTasks"
+      parameters: []
+      responses:
+        200:
+          description: "Status 200"
+        404:
+          description: "Status 404"
+      x-swagger-router-controller: "Task"
+    post:
+      tags:
+      - "Task"
+      summary: "Adds a project task"
+      operationId: "createTask"
+      parameters: []
+      responses:
+        200:
+          description: "Task successfully created"
+        400:
+          description: "The task already exists"
+      x-swagger-router-controller: "Task"
+  /projectTasks/{TaskID}:
+    get:
+      tags:
+      - "Task"
+      summary: "Loads a task"
+      operationId: "getTask"
+      parameters:
+      - name: "TaskID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "The task is found"
+        404:
+          description: "The task doesn't exist"
+      x-swagger-router-controller: "Task"
+    put:
+      tags:
+      - "Task"
+      summary: "Stores a task"
+      operationId: "editTask"
+      parameters:
+      - name: "TaskID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+        400:
+          description: "Status 400"
+      x-swagger-router-controller: "Task"
+    delete:
+      tags:
+      - "Task"
+      summary: "Deletes a task"
+      operationId: "deleteTask"
+      parameters:
+      - name: "TaskID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Status 200"
+      x-swagger-router-controller: "Task"
+definitions:
+  Project:
+    type: "object"
+    description: "parameters needed to create a project"
+  Tutor:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+    description: "Parameters required for tutor"
+    example:
+      tutorID: "tutorID"
+  Category:
+    type: "object"
+    description: "parameters needed to create a category"
+  Task:
+    type: "object"
