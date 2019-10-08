@@ -52,17 +52,9 @@ var initialise = function (url, needsSSL) { //initialises the database connectio
 
 var getTutors = async function(tutorID){
   var result = null;
-  
-//   var stem='select * from Tutors where';
-//   var tutorID_comp='(&=$1::text is null or TutorID)';
-
-//   var query=
-//     stem+
-//     tutorID_comp+ ";";
 
 var query = "SELECT * FROM \"public\".\"Tutor\"";
 
-//   var parameters = [tutorID];
 var parameters = [];
   try{
       var response = await thePool.query(query,parameters);
@@ -71,14 +63,78 @@ var parameters = [];
       console.log(e);
       throw(createError(errors.DATABASE_ERROR,e.message));
   }
-
-  
   return result;
 }
 
+var getTutor = async function(TutorID)
+{
+    var result=null;
+    
+var query = "SELECT * FROM \"public\".\"Tutor\" WHERE \"Tutor\".\"id\"=$1;";
 
-  module.exports = {
+var parameters = [TutorID];
+   try{
+      var response = await thePool.query(query,parameters);
+        result=response.rows;
+    }catch(e){
+        console.log(e);
+        throw(createError(errors.PARAMETER_ERROR,e.message));
+    }
+
+    return result;
+}
+
+var postTutor = async function(name){
+  var result = [];
+  
+  var parameters=[name];
+
+  var query = "INSERT INTO \"public\".\"Tutor\" (\"name\") VALUES($1) RETURNING \"id\",\"name\";";
+  try{
+    var response = await thePool.query(query,parameters);
+    result=response.rows;
+  }catch(e){
+    throw(createError(errors.PARAMETER_ERROR,e.message));
+  }
+
+  return result;
+}
+
+var putTutor = async function(TutorID,name){
+  var result=null;
+  var parameters=[TutorID,name];
+  var query = 'UPDATE \"public\".\"Tutor\" SET \"name\" = $2::text WHERE \"id\"=$1::text RETURNING \"id\",\"name\";';
+  try{
+    var response=await thePool.query(query,parameters);
+    result = response.rows;
+  }catch(e){
+    throw(createError(errors.PARAMETER_ERROR,e.message));
+  }
+  if(!result){
+    throw(createError(errors.PARAMETER_ERROR,"No result! Perhaps the id was incorrect."));
+  }
+  return result;
+}
+
+var deleteTutor = async function(TutorID){
+  var result=null;
+  var parameters=[TutorID];
+  var query='DELETE FROM \"public\".\"Tutor\" WHERE \"id\" = $1 ;';
+  try{
+    var response = await thePool.query(query,parameters);
+    result = response.rowCount;
+  }catch(e){
+    throw(createError(errors.PARAMETER_ERROR,e.message));
+  }
+  return result;
+}
+
+module.exports = {
     errors:errors,
     initialise: initialise,
-    getTutors:getTutors
-  };
+    getTutors:getTutors,
+    getTutor:getTutor,
+    postTutor:postTutor,
+    putTutor:putTutor,
+    deleteTutor:deleteTutor
+};

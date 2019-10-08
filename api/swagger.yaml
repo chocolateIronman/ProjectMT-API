@@ -113,7 +113,7 @@ paths:
       tags:
       - "Tutor"
       summary: "Adds a tutor"
-      operationId: "addTutor"
+      operationId: "postTutor"
       consumes:
       - "application/json"
       produces:
@@ -153,12 +153,18 @@ paths:
       tags:
       - "Tutor"
       summary: "Stores a tutor"
-      operationId: "editTutor"
+      operationId: "putTutor"
       parameters:
       - name: "TutorID"
         in: "path"
         required: true
         type: "string"
+
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Tutor"
       responses:
         200:
           description: "Status 200"
@@ -320,7 +326,7 @@ definitions:
         type: "string"
     description: "Parameters required for tutor"
     example:
-      tutorID: "tutorID"
+      name: "Max"
   Category:
     type: "object"
     description: "parameters needed to create a category"
