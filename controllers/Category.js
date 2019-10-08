@@ -3,13 +3,15 @@
 var utils = require('../utils/writer.js');
 var Category = require('../service/CategoryService');
 
-module.exports.createCategory = function createCategory (req, res, next) {
-  Category.createCategory()
+module.exports.postCategory = function createCategory (req, res, next) {
+  var body=req.swagger.params['body'].value;
+  var name=body.name;
+  Category.postCategory(name)
     .then(function (response) {
       utils.writeJson(res, response);
     })
     .catch(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson(res, utils.respondWithCode(response.statusCode,response));
     });
 };
 
@@ -20,12 +22,13 @@ module.exports.deleteCategory = function deleteCategory (req, res, next) {
       utils.writeJson(res, response);
     })
     .catch(function (response) {
-      utils.writeJson(res, response);
+      utils.writeJson(res, utils.respondWithCode(response.statusCode,response));
     });
 };
 
 module.exports.getCategories = function getCategories (req, res, next) {
-  Category.getCategories()
+
+  var response=Category.getCategories()
     .then(function (response) {
       utils.writeJson(res, response);
     })
@@ -36,7 +39,7 @@ module.exports.getCategories = function getCategories (req, res, next) {
 
 module.exports.getCategory = function getCategory (req, res, next) {
   var categoryID = req.swagger.params['categoryID'].value;
-  Category.getCategory(categoryID)
+  var response=Category.getCategory(categoryID)
     .then(function (response) {
       utils.writeJson(res, response);
     })

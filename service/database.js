@@ -83,7 +83,7 @@ var parameters = [TutorID];
 
     return result;
 }
-
+//-------------------------------TUTOR---------------------------------------
 var postTutor = async function(name){
   var result = [];
   
@@ -129,6 +129,60 @@ var deleteTutor = async function(TutorID){
   return result;
 }
 
+//-------------------------CATEGORY-----------------------------------
+var getCategories=async function(){
+  var result=null;
+  var query='SELECT * FROM \"public\".\"ProjectCategories\";';
+  var parameters=[];
+  try{
+    var response=await thePool.query(query,parameters);
+    result=response.rows;
+  }catch(e){
+    console.log(e);
+    throw(createError(errors.DATABASE_ERROR,e.message));
+  }
+  return result;
+}
+
+var getCategory=async function(categoryID){
+  var result=null;
+  var query='SELECT * FROM \"public\".\"ProjectCategories\" WHERE \"ProjectCategories\".\"id\"=$1;';
+  var parameters=[categoryID];
+  try{
+    var response=await thePool.query(query,parameters);
+    result=response.rows;
+  }catch(e){
+    throw(createError(errors.PARAMETER_ERROR,e.message));
+  }
+  return result;
+}
+
+var postCategory=async function(name){
+  var result=[];
+  var parameters=[name];
+  var query='INSERT INTO \"public\".\"ProjectCategories\" (\"name\") VALUES($1) RETURNING \"id\",\"name\";';
+  try{
+    var response=await thePool.query(query,parameters);
+    result=response.rows;
+  }catch(e){
+    throw(createError(errors.PARAMETER_ERROR,e.message));
+  }
+  return result;
+}
+
+var deleteCategory=async function(categoryID){
+  var result=null;
+  var parameters=[categoryID];
+  var query='DELETE FROM \"public\".\"ProjectCategories\" WHERE \"id\" = $1 ;';
+  try{
+    var response=await thePool.query(query,parameters);
+    result=response.rowCount;
+  }catch(e){
+    throw(createError(errors.PARAMETER_ERROR,e.message));
+  }
+  return result;
+}
+
 module.exports = {
     errors:errors,
     initialise: initialise,
@@ -136,5 +190,9 @@ module.exports = {
     getTutor:getTutor,
     postTutor:postTutor,
     putTutor:putTutor,
-    deleteTutor:deleteTutor
+    deleteTutor:deleteTutor,
+    getCategories:getCategories,
+    getCategory:getCategory,
+    postCategory:postCategory,
+    deleteCategory:deleteCategory
 };

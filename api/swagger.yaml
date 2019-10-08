@@ -195,6 +195,10 @@ paths:
       responses:
         200:
           description: "Status 200"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Category"
         404:
           description: "Status 404"
       x-swagger-router-controller: "Category"
@@ -202,8 +206,17 @@ paths:
       tags:
       - "Category"
       summary: "Adds a project category"
-      operationId: "createCategory"
-      parameters: []
+      operationId: "postCategory"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Category"
       responses:
         200:
           description: "The category is created"
@@ -329,6 +342,13 @@ definitions:
       name: "Max"
   Category:
     type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
     description: "parameters needed to create a category"
+    example:
+      name: "App"
   Task:
     type: "object"

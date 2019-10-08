@@ -1,14 +1,31 @@
 'use strict';
 
+var database=require("./database");
+var errorApi=require("../utils/error");
 
 /**
  * Adds a project category
  *
  * no response value expected for this operation
  **/
-exports.createCategory = function() {
+exports.postCategory = function(name) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    database.postCategory(name)
+    .then(resolve)
+    .catch(function(e){
+      switch(e.statusCode){
+        case database.errors.DATABASE_ERROR:
+        //remove database specific error - will leak information
+        reject(errorApi.create500Error("Something terrible happened to the database. Sorry..."));
+        break;
+        case database.errors.INTERNAL_ERROR:
+        reject(errorApi.create500Error(e.message));
+        break;
+        case database.errors.PARAMETER_ERROR:
+        reject(errorApi.create400Error(e.message));
+        break;
+      }
+    })
   });
 }
 
@@ -21,7 +38,28 @@ exports.createCategory = function() {
  **/
 exports.deleteCategory = function(categoryID) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    database.deleteCategory(categoryID)
+    .then(function (result){
+      if(result){//row count>0
+        resolve(result);
+      } else {
+        reject(errorApi.create404Error("Couldn't find anything matching the request URI."));
+      }
+    })
+    .catch(function(e){
+      switch(e.statusCode){
+        case database.errors.DATABASE_ERROR:
+        //remove database specific error - will leak information
+        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
+        break;
+        case database.errors.INTERNAL_ERROR:
+        reject(errorApi.create500Error(e.message));
+        break;
+        case database.errors.PARAMETER_ERROR:
+        reject(errorApi.create400Error(e.message));
+        break;
+      }
+    })
   });
 }
 
@@ -33,7 +71,21 @@ exports.deleteCategory = function(categoryID) {
  **/
 exports.getCategories = function() {
   return new Promise(function(resolve, reject) {
-    resolve();
+    database.getCategories()
+    .then(resolve)
+    .catch(function(e){
+      switch(e.statusCode){
+        case database.errors.DATABASE_ERROR:
+        //remove specific database error - will leak information
+        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
+        break;
+        case database.errors.INTERNAL_ERROR:
+        reject(errorApi.create500Error(e.message));
+        break;
+        case database.errors.PARAMETER_ERROR:
+        reject(errorApi.create400Error(e.message));
+      }
+    })
   });
 }
 
@@ -46,7 +98,28 @@ exports.getCategories = function() {
  **/
 exports.getCategory = function(categoryID) {
   return new Promise(function(resolve, reject) {
-    resolve();
+    database.getCategory(categoryID)
+    .then(function(result){
+      if(result && result.length>0){
+        resolve(result);
+      } else{
+        reject(errorApi.create404Error("Couldn't find anything matching the requested URI."));
+      }
+    })
+    .catch(function(e){
+      switch(e.statusCode){
+        case database.errors.DATABASE_ERROR:
+        //remove database specific error - will leak information.
+        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
+        break;
+        case database.errors.INTERNAL_ERROR:
+        reject(errorApi.create500Error(e.message));
+        break;
+        case database.errors.PARAMETER_ERROR:
+        reject(errorApi.create400Error(e.message));
+        break;
+      }
+    })
   });
 }
 
