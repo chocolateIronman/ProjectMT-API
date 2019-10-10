@@ -150,6 +150,7 @@ exports.getTutors = function(tutorID) {
         break;
         case database.errors.PARAMETER_ERROR:
         reject(errorApi.create400Error(e.message));
+        break;
       }
     })
   });

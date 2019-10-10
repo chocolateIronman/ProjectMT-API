@@ -19,10 +19,23 @@ paths:
       - "Project"
       summary: "Loads a list of projects"
       operationId: "getProjects"
-      parameters: []
+      produces:
+      - "application/json"
+      - "application/x-yaml"
+      - "application/xml"
+      - "text/xml"
+      parameters: 
+        - name: "tutorID"
+          in: "query"
+          required: true
+          type: "string"
       responses:
         200:
           description: "Status 200"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Project"
         400:
           description: "Status 400"
       x-swagger-router-controller: "Project"
@@ -30,11 +43,22 @@ paths:
       tags:
       - "Project"
       summary: "Adds a project"
-      operationId: "createProject"
-      parameters: []
+      operationId: "postProject"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Project"
       responses:
         200:
           description: "The project has been saved"
+          schema:
+            $ref: "#/definitions/Project"
         400:
           description: "The project already exists"
       x-swagger-router-controller: "Project"
@@ -329,7 +353,43 @@ paths:
 definitions:
   Project:
     type: "object"
+    required:
+    - "TutorID"
+    - "ProjectName"
+    - "ProjectCategory"
+    - "ProjectYear"
+    - "StartDate"
+    - "EndDate"
+    - "GroupName"
+    - "Notes"
+    properties:
+      TutorID:
+        type: "string"
+      ProjectName:
+        type: "string"
+      ProjectCategory:
+        type: "string"
+      ProjectYear:
+        type: "integer"
+      StartDate:
+        type: "string"
+      EndDate:
+        type: "string"
+      GroupName:
+        type: "string"
+      Notes:
+        type: "string"
     description: "parameters needed to create a project"
+    example:
+      TutorID: "uuid"
+      ProjectID: "uuid"
+      ProjectName: "name"
+      ProjectCategory: "uuid"
+      ProjectYear: 1
+      StartDate: "22/12/2222"
+      EndDate: "12/12/3333"
+      GroupName: "name"
+      Notes: "some notes"
   Tutor:
     type: "object"
     required:
@@ -339,6 +399,7 @@ definitions:
         type: "string"
     description: "Parameters required for tutor"
     example:
+      id: "uuid"
       name: "Max"
   Category:
     type: "object"
@@ -349,6 +410,7 @@ definitions:
         type: "string"
     description: "parameters needed to create a category"
     example:
+      id: "uuid"
       name: "App"
   Task:
     type: "object"

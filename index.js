@@ -11,7 +11,7 @@ var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var serverPort = 8080;
 
-var database = require('./service/database');
+var database = require('./utils/database/databaseService');
 var dbURL = process.env.DATABASE_URL;
 
 //database connection

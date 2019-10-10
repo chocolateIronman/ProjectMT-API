@@ -9,7 +9,7 @@ var thePool = null;
 var theConfig = null;
 
 
-const errors = {//an object which defines all errors which are supported
+const errors = { // An object which defines all errors which are supported
   PARAMETER_ERROR:-1,
   DATABASE_ERROR:-2,
   INTERNAL_ERROR:-3
@@ -20,7 +20,7 @@ var initialise = function (url, needsSSL) { //initialises the database connectio
       url += "?sslmode=require"
     }
   
-    if (thePool) { //a pool of cliemts
+    if (thePool) { // A pool of clients
       thePool.end();
     };
   
@@ -49,8 +49,8 @@ var initialise = function (url, needsSSL) { //initialises the database connectio
     
   }
 
-
-var getTutors = async function(tutorID){
+//-------------------------------TUTOR--------------------------------------- 
+var getTutors = async function(){
   var result = null;
 
 var query = "SELECT * FROM \"public\".\"Tutor\"";
@@ -83,7 +83,7 @@ var parameters = [TutorID];
 
     return result;
 }
-//-------------------------------TUTOR---------------------------------------
+
 var postTutor = async function(name){
   var result = [];
   
@@ -183,6 +183,35 @@ var deleteCategory=async function(categoryID){
   return result;
 }
 
+//--------------------PROJECT-------------------------------
+var getProjects = async function(TutorID){
+  var result=null;
+  var query='';
+  var parameters =[TutorID];
+  try{
+    var response=await thePool.query(query,parameters);
+    result=response.rows;
+  }catch(e){
+    throw(createError(errors.DATABASE_ERROR,e.message));
+  }
+  return result;
+}
+
+var getProject = async function(ProjectID){
+  var result=null;
+  var query='SELECT * FROM \"public\".\"Project\" WHERE \"ProjectID\"=$1;';
+  var parameters=[ProjectID];
+  try{
+    var response=await thePool.query(query,parameters);
+    result=response.rows;
+  }catch(e){
+    throw(createError(errors.PARAMETER_ERROR,e.message));
+  }
+  return result;
+}
+
+
+
 module.exports = {
     errors:errors,
     initialise: initialise,
@@ -194,5 +223,8 @@ module.exports = {
     getCategories:getCategories,
     getCategory:getCategory,
     postCategory:postCategory,
-    deleteCategory:deleteCategory
+    deleteCategory:deleteCategory,
+    getProjects:getProjects,
+    getProject:getProject,
+    
 };

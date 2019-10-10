@@ -27,6 +27,14 @@ module.exports = {
         result.statusCode = 500;
         result.message = "Not yet implemented: " + message;
         return result;
+    },
+
+    stringifyError: (error) => {
+        var plainObject = {};
+        Object.getOwnPropertyNames(error).forEach(function (key) {
+            plainObject[key] = error[key];
+        });
+        return JSON.stringify(plainObject, null, "\t");
     }
 
 }
