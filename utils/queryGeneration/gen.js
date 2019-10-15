@@ -1,3 +1,4 @@
+//Thanks to the Open-Source community
 var glob = require('glob')
 var path = require('path')
 var fs = require('fs')

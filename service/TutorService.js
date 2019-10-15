@@ -1,7 +1,8 @@
 'use strict';
 
-var database = require("./database");
+var database = require("../utils/data/data");
 var errorApi = require("../utils/error");
+var httpUtil = require("../utils/http/http")
 
 /**
  * Adds a tutor
@@ -9,27 +10,21 @@ var errorApi = require("../utils/error");
  * body Tutor 
  * returns Tutor
  **/
-exports.postTutor = function(name) {
-  return new Promise(function(resolve,reject){
-    console.log(database.postTutor);
-    database.postTutor(name)
-    .then(resolve)
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove database specific error - will leak information
-        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-        break;
-      }
-    })
-    
-  })
+exports.postTutor = function(args,res,next) {
+  
+  var name=args.body.value.name || null; //match whats in the swagger file
+
+  database.postTutor(
+    name
+  ).then(
+    (result) => {
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error) => {
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -39,31 +34,20 @@ exports.postTutor = function(name) {
  * tutorID String 
  * no response value expected for this operation
  **/
-exports.deleteTutor = function(tutorID) {
-  return new Promise(function(resolve, reject) {
-    database.deleteTutor(tutorID)
-      .then(function (result){
-        if(result){ //row count>0
-          resolve(result);
-        } else{
-          reject(errorApi.create404Error("Couldn't find anything matching the request URI."));
-        }
-      })
-      .catch(function(e){
-        switch(e.statusCode){
-          case database.errors.DATABASE_ERROR:
-          //remove database specific error - will leak information.
-          reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-          break;
-          case database.errors.INTERNAL_ERROR:
-          reject(errorApi.create500Error(e.message));
-          break;
-          case database.errors.PARAMETER_ERROR:
-          reject(errorApi.create400Error(e.message));
-          break;
-        }
-      })
-  });
+exports.deleteTutor = function(args,res,next) {
+  var tutor_id=args.TutorID.value || null; //match whats in the swagger file
+
+  database.deleteTutor(
+    tutor_id
+  ).then(
+    (result) => {
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error) => {
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -74,25 +58,23 @@ exports.deleteTutor = function(tutorID) {
  * body Tutor
  * returns Tutor
  **/
-exports.putTutor = function(tutorID,name) {
-  return new Promise(function(resolve, reject) {
-    database.putTutor(tutorID,name)
-      .then(resolve)
-      .catch(function(e){
-        switch (e.statusCode){
-          case database.errors.DATABASE_ERROR:
-          //remove database specific error - will leak information.
-          reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-          break;
-          case database.errors.INTERNAL_ERROR:
-          reject(errorApi.create500Error(e.message));
-          break;
-          case database.errors.PARAMETER_ERROR:
-          reject(errorApi.create400Error(e.message));
-          break;
-        }
-      })
-  });
+exports.putTutor = function(args,res,next) {
+
+  var tutor_id=args.TutorID.value || null; //match whats in the swagger file
+  var name=args.body.value.name || null;
+  database.putTutor(
+    tutor_id,
+    name
+  ).then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
+  
 }
 
 
@@ -102,31 +84,20 @@ exports.putTutor = function(tutorID,name) {
  * tutorID String 
  * no response value expected for this operation
  **/
-exports.getTutor = function(tutorID) {
-  return new Promise(function(resolve, reject) {
-    database.getTutor(tutorID)
-    .then(function(result){
-      if(result && result.length>0){
-        resolve(result);
-      } else {
-        reject(errorApi.create404Error("Couldn't find anything matching the request URI."));
-      }
-    })
-    .catch(function (e){
-      switch (e.statusCode){
-        case database.errors.DATABASE_ERROR:
-          //remove database specific error - will leak information.
-          reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-          break;
-        case database.errors.INTERNAL_ERROR:
-          reject(errorApi.create500Error(e.message));
-          break;
-        case database.errors.PARAMETER_ERROR:
-          reject(errorApi.create400Error(e.message));
-          break;
-      }
-    })
-  });
+exports.getTutor = function(args,res,next) {
+  // TODO: Create authentication scope into object and pass to database API method below.
+  var tutor_id=args.TutorID.value || null; //match whats in the swagger file
+  database.getTutor(
+    tutor_id
+  ).then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -135,24 +106,16 @@ exports.getTutor = function(tutorID) {
  *
  * no response value expected for this operation
  **/
-exports.getTutors = function(tutorID) {
-  return new Promise(function(resolve, reject) {
-    database.getTutors(tutorID)
-    .then(resolve)
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove database specific errror - will leak information
-        reject (errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-        break;
-      }
-    })
-  });
-}
+exports.getTutors = function(args,res,next) {
+  // TODO: Create authentication scopeinfo object and pass to database API method below.
+  database.getTutors().then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  );
+};
 

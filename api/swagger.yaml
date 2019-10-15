@@ -354,7 +354,6 @@ definitions:
   Project:
     type: "object"
     required:
-    - "TutorID"
     - "ProjectName"
     - "ProjectCategory"
     - "ProjectYear"
@@ -363,8 +362,6 @@ definitions:
     - "GroupName"
     - "Notes"
     properties:
-      TutorID:
-        type: "string"
       ProjectName:
         type: "string"
       ProjectCategory:
@@ -381,7 +378,6 @@ definitions:
         type: "string"
     description: "parameters needed to create a project"
     example:
-      TutorID: "uuid"
       ProjectID: "uuid"
       ProjectName: "name"
       ProjectCategory: "uuid"

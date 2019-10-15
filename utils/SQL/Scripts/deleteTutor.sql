@@ -1,0 +1,1 @@
+DELETE FROM "Tutor" WHERE "Tutor".id = $1

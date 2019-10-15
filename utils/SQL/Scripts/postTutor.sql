@@ -1,0 +1,1 @@
+INSERT INTO "public"."Tutor" (name) VALUES($1) RETURNING "Tutor".id,"Tutor".name

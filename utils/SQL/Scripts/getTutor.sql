@@ -1,0 +1,1 @@
+SELECT * FROM "Tutor" WHERE "Tutor".id = $1
