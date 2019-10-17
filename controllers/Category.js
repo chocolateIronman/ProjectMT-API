@@ -3,47 +3,19 @@
 var utils = require('../utils/writer.js');
 var Category = require('../service/CategoryService');
 
-module.exports.postCategory = function createCategory (req, res, next) {
-  var body=req.swagger.params['body'].value;
-  var name=body.name;
-  Category.postCategory(name)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, utils.respondWithCode(response.statusCode,response));
-    });
+module.exports.postCategory = function postCategory (req, res, next) {
+  Category.postCategory(req.swagger.params,res,next);
 };
 
 module.exports.deleteCategory = function deleteCategory (req, res, next) {
-  var categoryID = req.swagger.params['categoryID'].value;
-  Category.deleteCategory(categoryID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, utils.respondWithCode(response.statusCode,response));
-    });
+  Category.deleteCategory(req.swagger.params,res,next);
 };
 
 module.exports.getCategories = function getCategories (req, res, next) {
 
-  var response=Category.getCategories()
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  Category.getCategories(req.swagger.params,res,next);
 };
 
 module.exports.getCategory = function getCategory (req, res, next) {
-  var categoryID = req.swagger.params['categoryID'].value;
-  var response=Category.getCategory(categoryID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  Category.getCategory(req.swagger.params,res,next);
 };

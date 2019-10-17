@@ -27,7 +27,7 @@ var getProjectsForTutor = async (tutor_id) => {
 
     return result;
 };
-
+//-------------------TUTOR---------------------
 var doGetTutors=async ()=>{
     var result=null;
     result=await Sql.getTutors();
@@ -127,11 +127,94 @@ var deleteTutor = async (tutor_id) => {
     return result;
 }
 
+//--------------CATEGORY---------------------
+var doGetCategories=async () =>{
+    var result=null;
+    result=await Sql.getCategories();
+    return result;
+}
+var getCategories=async()=>{
+    var result=null;
+    //TODO: Authentication check. Throw error ig not authorized.
+    try{
+        result = await doGetCategories();
+    }catch(error){
+        console.log(error.message);
+        throw errorApi.create500Error("SQL Error");
+    }
+
+    return result;
+}
+
+var doGetCategory = async (category_id) =>{
+    var result=null;
+    result=await Sql.getCategory(category_id);
+    return result;
+}
+var getCategory=async(category_id)=>{
+    var result = null;
+
+    if(category_id===null)throw errorApi.create400Error("Parameter 'category_id' is null.");
+
+    try{
+        result=await doGetCategory(category_id);
+    }catch(error){
+        console.log(error.message);
+        throw errorApi.create500Error("SQL Error");
+    }
+
+    return result;
+}
+
+var doPostCategory = async(name) => {
+    var result=[];
+    result = await Sql.postCategory(name);
+    return result;
+}
+var postCategory = async(name) => {
+    var result = [];
+    if(name===null) throw errorApi.create400Error("Parameter 'name' is null.");
+
+    try{
+        result = await doPostCategory(name);
+    } catch (error) {
+        console.log(error.message);
+        throw errorApi.create500Error("SQL Error");
+    }
+
+    return result;
+}
+
+var doDeleteCategory = async (category_id) => {
+    var result=null;
+    result = await Sql.deleteCategory(category_id);
+    return result;
+}
+var deleteCategory = async (category_id) => {
+    var result= null;
+
+    if(category_id===null) throw errorApi.create400Error("Parameter 'category_id' is null.");
+
+    try{
+        result = await doDeleteCategory(category_id);
+    } catch (error) {
+        console.log(error.message);
+        throw errorApi.create500Error("SQL Error");
+
+    }
+
+    return result;
+}
+
 module.exports = {
     getProjectsForTutor: getProjectsForTutor,
     getTutors:getTutors,
     getTutor:getTutor,
     postTutor:postTutor,
     putTutor:putTutor,
-    deleteTutor:deleteTutor
+    deleteTutor:deleteTutor,
+    getCategories:getCategories,
+    getCategory:getCategory,
+    postCategory:postCategory,
+    deleteCategory:deleteCategory
 }

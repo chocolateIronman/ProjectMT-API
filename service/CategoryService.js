@@ -1,32 +1,29 @@
 'use strict';
 
-var database=require("./database");
+var database=require("../utils/data/data");
 var errorApi=require("../utils/error");
+var httpUtil = require("../utils/http/http");
 
 /**
  * Adds a project category
  *
  * no response value expected for this operation
  **/
-exports.postCategory = function(name) {
-  return new Promise(function(resolve, reject) {
-    database.postCategory(name)
-    .then(resolve)
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove database specific error - will leak information
-        reject(errorApi.create500Error("Something terrible happened to the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-        break;
-      }
-    })
-  });
+exports.postCategory = function(args,res,next) {
+  
+  var name=args.body.value.name || null; //match whats in the swagger file
+
+  database.postCategory(
+    name
+  ).then(
+    (result) => {
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error) => {
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -36,31 +33,20 @@ exports.postCategory = function(name) {
  * categoryID String 
  * no response value expected for this operation
  **/
-exports.deleteCategory = function(categoryID) {
-  return new Promise(function(resolve, reject) {
-    database.deleteCategory(categoryID)
-    .then(function (result){
-      if(result){//row count>0
-        resolve(result);
-      } else {
-        reject(errorApi.create404Error("Couldn't find anything matching the request URI."));
-      }
-    })
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove database specific error - will leak information
-        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-        break;
-      }
-    })
-  });
+exports.deleteCategory = function(args,res,next) {
+  var category_id=args.categoryID.value || null; //matches whats in the swagger file
+
+  database.deleteCategory(
+    category_id
+  ).then(
+    (result) => {
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error) => {
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -69,24 +55,17 @@ exports.deleteCategory = function(categoryID) {
  *
  * no response value expected for this operation
  **/
-exports.getCategories = function() {
-  return new Promise(function(resolve, reject) {
-    database.getCategories()
-    .then(resolve)
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove specific database error - will leak information
-        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-      }
-    })
-  });
+exports.getCategories = function(args,res,next) {
+  
+  database.getCategories().then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -96,30 +75,18 @@ exports.getCategories = function() {
  * categoryID String 
  * no response value expected for this operation
  **/
-exports.getCategory = function(categoryID) {
-  return new Promise(function(resolve, reject) {
-    database.getCategory(categoryID)
-    .then(function(result){
-      if(result && result.length>0){
-        resolve(result);
-      } else{
-        reject(errorApi.create404Error("Couldn't find anything matching the requested URI."));
-      }
-    })
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove database specific error - will leak information.
-        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-        break;
-      }
-    })
-  });
+exports.getCategory = function(args,res,next) {
+  var category_id=args.categoryID.value || null; //match whats in the swagger file
+  database.getCategory(
+    category_id
+  ).then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 

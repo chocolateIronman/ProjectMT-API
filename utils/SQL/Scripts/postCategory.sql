@@ -1,0 +1,1 @@
+INSERT INTO "ProjectCategories" (name) VALUES($1) RETURNING "ProjectCategories".id, "ProjectCategories".name

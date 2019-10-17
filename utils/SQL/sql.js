@@ -20,6 +20,7 @@ class Sql {
         return result;
     }
 
+    //--------------TUTOR---------------------
     static async getTutors(){
         var result=null;
         //TODO: pagination
@@ -36,9 +37,6 @@ class Sql {
 
     static async getTutor(tutor_id){
         var result=null;
-
-        // TODO: pagination
-
         var parameters=[tutor_id];
 
         //single query wrapped in multi query stuff
@@ -97,6 +95,66 @@ class Sql {
         return result;
     }
 
+    //-----------------CATEGORY---------------------
+    static async getCategories(){
+        var result=null;
+        //TODO: pagination
+        var parameters=[];
+        //single query wrapped in multi query stuff
+        var query=genApi.gen("getCategories",parameters);
+        var responses=await dbApi.multiQuery([query]);
+
+        if(responses[0].rows.length>0){
+            result=responses[0].rows;
+        }
+
+        return result;
+    }
+
+    static async getCategory(category_id){
+        var result=null;
+        var parameters=[category_id];
+
+        //single query wrapped in multi query stuff
+        var query=genApi.gen("getCategory",parameters);
+        var responses=await dbApi.multiQuery([query]);
+
+        if(responses[0].rows.length>0){
+            result=responses[0].rows;
+        }
+
+        return result;
+    }
+
+    static async postCategory(name) {
+        var result = [];
+        var parameters=[name];
+
+        //single query wrapped in multi query stuff
+        var query = genApi.gen("postCategory",parameters);
+        var responses = await dbApi.multiQuery([query]);
+
+        if(responses[0].rows.length>0){
+            result = responses[0].rows;
+        }
+        
+        return result;
+    }
+
+    static async deleteCategory(category_id){
+        var result = null;
+        var parameters = [category_id];
+
+        //single query wrapped in multi query stuff
+        var query = genApi.gen("deleteCategory",parameters);
+        var responses = await dbApi.multiQuery([query]);
+
+        if (responses[0].rows.length>0) {
+            result = responses[0].rows;
+        }
+
+        return result;
+    }
 }
 
 module.exports = Sql;
