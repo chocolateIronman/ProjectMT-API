@@ -1,0 +1,1 @@
+INSERT INTO "Project" ("ProjectName","ProjectYear","StartDate","EndDate","GroupName","Notes") VALUES($1,$2,$3,$4,$5,$6) RETURNING *

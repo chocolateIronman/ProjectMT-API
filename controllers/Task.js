@@ -3,55 +3,22 @@
 var utils = require('../utils/writer.js');
 var Task = require('../service/TaskService');
 
-module.exports.createTask = function createTask (req, res, next) {
-  Task.createTask()
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+module.exports.postTask = function postTask (req, res, next) {
+  Task.postTask(req.swagger.params,res,next);
 };
 
 module.exports.deleteTask = function deleteTask (req, res, next) {
-  var taskID = req.swagger.params['TaskID'].value;
-  Task.deleteTask(taskID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  Task.deleteTask(req.swagger.params,res,next);
 };
 
-module.exports.editTask = function editTask (req, res, next) {
-  var taskID = req.swagger.params['TaskID'].value;
-  Task.editTask(taskID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+module.exports.putTask = function putTask (req, res, next) {
+  Task.putTask(req.swagger.params,res,next);
 };
 
 module.exports.getTask = function getTask (req, res, next) {
-  var taskID = req.swagger.params['TaskID'].value;
-  Task.getTask(taskID)
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  Task.getTask(req.swagger.params,res,next);
 };
 
 module.exports.getTasks = function getTasks (req, res, next) {
-  Task.getTasks()
-    .then(function (response) {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
+  Task.getTasks(req.swagger.params,res,next);
 };

@@ -1,0 +1,1 @@
+INSERT INTO "ProjectToTaskMapping" ("task","project") VALUES ($1,$2) RETURNING *

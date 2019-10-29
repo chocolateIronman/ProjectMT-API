@@ -1,0 +1,1 @@
+UPDATE "Project" SET  "ProjectName" = $2, "ProjectYear"=$3, "StartDate"=$4, "EndDate"=$5, "GroupName"=$6, "Notes"=$7 WHERE "Project".id=$1 RETURNING *

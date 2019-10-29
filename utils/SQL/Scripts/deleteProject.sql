@@ -1,0 +1,1 @@
+DELETE FROM "Project" WHERE "Project".id=$1

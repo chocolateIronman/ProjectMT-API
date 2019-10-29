@@ -1,0 +1,1 @@
+DELETE FROM "ProjectToCategoryMapping" WHERE "ProjectToCategoryMapping".project=$1;

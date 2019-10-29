@@ -1,0 +1,1 @@
+SELECT * FROM "Project" WHERE "Project".id = $1

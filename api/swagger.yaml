@@ -83,12 +83,18 @@ paths:
       tags:
       - "Project"
       summary: "Updates a project"
-      operationId: "editProject"
+      operationId: "putProject"
       parameters:
       - name: "ProjectID"
         in: "path"
         required: true
         type: "string"
+
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Project"
       responses:
         200:
           description: "Status 200"
@@ -284,10 +290,18 @@ paths:
       - "Task"
       summary: "Loads a list of project tasks"
       operationId: "getTasks"
-      parameters: []
+      parameters: 
+        - name: "projectID"
+          in: "query"
+          required: true
+          type: "string"
       responses:
         200:
           description: "Status 200"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Task"
         404:
           description: "Status 404"
       x-swagger-router-controller: "Task"
@@ -295,8 +309,17 @@ paths:
       tags:
       - "Task"
       summary: "Adds a project task"
-      operationId: "createTask"
-      parameters: []
+      operationId: "postTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
       responses:
         200:
           description: "Task successfully created"
@@ -324,12 +347,18 @@ paths:
       tags:
       - "Task"
       summary: "Stores a task"
-      operationId: "editTask"
+      operationId: "putTask"
       parameters:
       - name: "TaskID"
         in: "path"
         required: true
         type: "string"
+      
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
       responses:
         200:
           description: "Status 200"
@@ -369,16 +398,15 @@ definitions:
       ProjectYear:
         type: "integer"
       StartDate:
-        type: "string"
+        type: "integer"
       EndDate:
-        type: "string"
+        type: "integer"
       GroupName:
         type: "string"
       Notes:
         type: "string"
     description: "parameters needed to create a project"
     example:
-      ProjectID: "uuid"
       ProjectName: "name"
       ProjectCategory: "uuid"
       ProjectYear: 1
@@ -410,3 +438,31 @@ definitions:
       name: "App"
   Task:
     type: "object"
+    required:
+     - "TaskName"
+     - "StartDate"
+     - "EndDate"
+     - "DueDate"
+     - "Notes"
+     - "ProjectID"
+    properties:
+      TaskName:
+        type: "string"
+      StartDate:
+        type: "integer"
+      EndDate:
+        type: "integer"
+      DueDate:
+        type: "integer"
+      Notes:
+        type: "string"
+      ProjectID:
+        type: "string"
+    description: "parameters needed to create a task"
+    example:
+      TaskName: "name"
+      StartDate: "epoch time"
+      EndDate: "epoch time"
+      DueDate: "epoch time"
+      Notes: "some notes"
+      ProjectID: "uuid"

@@ -9,25 +9,33 @@ var httpUtil = require("../utils/http/http");
  *
  * no response value expected for this operation
  **/
-exports.postProject = function(TutorID,ProjectName,ProjectCategory,ProjectYear,StartDate,EndDate,GroupName,Notes) {
-  return new Promise(function(resolve, reject) {
-    database.postProject(TutorID,ProjectName,ProjectCategory,ProjectYear,StartDate,EndDate,GroupName,Notes)
-    .then(resolve)
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove database specific error - will leak information
-        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-        break;
-      }
-    })
-  });
+exports.postProject = function(args,res,next) {
+
+  var ProjectName=args.body.value.ProjectName || null;
+  var ProjectYear=args.body.value.ProjectYear || null;
+  var StartDate=args.body.value.StartDate || null;
+  var EndDate=args.body.value.EndDate || null;
+  var GroupName=args.body.value.GroupName || null;
+  var Notes=args.body.value.Notes || null;
+  var ProjectCategory=args.body.value.ProjectCategory || null;
+
+  database.postProject(
+    ProjectName,
+    ProjectYear,
+    StartDate,
+    EndDate,
+    GroupName,
+    Notes,
+    ProjectCategory
+  ).then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -37,10 +45,20 @@ exports.postProject = function(TutorID,ProjectName,ProjectCategory,ProjectYear,S
  * projectID String 
  * no response value expected for this operation
  **/
-exports.deleteProject = function(projectID) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.deleteProject = function(args,res,next) {
+  var project_id=args.ProjectID.value || null; //match whats in the swagger file
+
+  database.deleteProject(
+    project_id
+  ).then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -50,10 +68,35 @@ exports.deleteProject = function(projectID) {
  * projectID String 
  * no response value expected for this operation
  **/
-exports.editProject = function(projectID) {
-  return new Promise(function(resolve, reject) {
-    resolve();
-  });
+exports.putProject = function(args,res,next) {
+  
+  var project_id=args.ProjectID.value || null; //match whats in the swagger file
+  var ProjectName = args.body.value.ProjectName|| null;
+  var ProjectCategory = args.body.value.ProjectCategory || null;
+  var ProjectYear = args.body.value.ProjectYear || null;
+  var StartDate = args.body.value.StartDate || null;
+  var EndDate = args.body.value.EndDate || null;
+  var GroupName = args.body.value.GroupName || null;
+  var Notes = args.body.value.Notes || null;
+
+  database.putProject(
+    project_id,
+    ProjectName,
+    ProjectCategory,
+    ProjectYear,
+    StartDate,
+    EndDate,
+    GroupName,
+    Notes
+  ).then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 
@@ -63,31 +106,19 @@ exports.editProject = function(projectID) {
  * projectID String 
  * no response value expected for this operation
  **/
-exports.getProject = function(projectID) {
-  return new Promise(function(resolve, reject) {
-    database.getProject(projectID)
-    .then(function(result){
-      if(result && result.length>0){
-        resolve(result);
-      } else {
-        reject(errorApi.create404Error("Couldn't find anything matching the requested URI."));
-      }
-    })
-    .catch(function(e){
-      switch(e.statusCode){
-        case database.errors.DATABASE_ERROR:
-        //remove database specific error - will leak information
-        reject(errorApi.create500Error("Something terrible happened with the database. Sorry..."));
-        break;
-        case database.errors.INTERNAL_ERROR:
-        reject(errorApi.create500Error(e.message));
-        break;
-        case database.errors.PARAMETER_ERROR:
-        reject(errorApi.create400Error(e.message));
-        break;
-      }
-    })
-  });
+exports.getProject = function(args,res,next) {
+  var project_id=args.ProjectID.value || null; //match whats in the swagger file
+  database.getProject(
+    project_id
+  ).then(
+    (result)=>{
+      httpUtil.endHttpOK(result,res);
+    }
+  ).catch(
+    (error)=>{
+      httpUtil.endHttpErr(error,res);
+    }
+  )
 }
 
 

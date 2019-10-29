@@ -1,0 +1,1 @@
+UPDATE "ProjectTasks"  SET "TaskName"=$2, "StartDate"=$3,"DueDate"=$4, "EndDate"=$5, "Notes"=$6  WHERE "ProjectTasks".id=$1 RETURNING "ProjectTasks".id,"ProjectTasks"."TaskName","ProjectTasks"."StartDate","ProjectTasks"."DueDate","ProjectTasks"."EndDate","ProjectTasks"."Notes"

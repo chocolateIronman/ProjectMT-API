@@ -1,0 +1,1 @@
+DELETE FROM "ProjectTasks" WHERE "ProjectTasks".id=$1
