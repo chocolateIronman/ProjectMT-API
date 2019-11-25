@@ -53,7 +53,7 @@ class Sql {
         var parameters=[project_id];
 
         //single query wrapped in multi query stuff
-        var query = genApi.gen("getProject",parameters);
+        var query = genApi.gen("getProjectInclCategory",parameters);
         var responses = await dbApi.multiQuery([query]);
 
         if(responses[0].rows.length>0){
