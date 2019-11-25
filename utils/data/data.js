@@ -32,12 +32,12 @@ function isEmpty(param) {
     return param === undefined || param === null;
 }
 
-var doPostProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory)=>{
+var doPostProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id)=>{
     var result=[];
-    result=await Sql.postProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory);
+    result=await Sql.postProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id);
     return result;
 }
-var postProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory)=>{
+var postProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id)=>{
     var result=[];
     if (isEmpty(ProjectName)) throw errorApi.create400Error("Parameter 'ProjectName' is null.");
     if (isEmpty(ProjectYear)) throw errorApi.create400Error("Parameter 'ProjectYear' is null.");
@@ -46,9 +46,10 @@ var postProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,
     if (isEmpty(GroupName)) throw errorApi.create400Error("Parameter 'GroupName' is null.");
     if (isEmpty(Notes)) throw errorApi.create400Error("Parameter 'Notes' is null.");
     if (isEmpty(ProjectCategory)) throw errorApi.create400Error("Parameter 'ProjectCategory' is null.");
+    if (isEmpty(tutor_id)) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
 
     try{
-        result=await doPostProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory);
+        result=await doPostProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id);
     }catch(error){
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");

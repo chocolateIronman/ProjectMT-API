@@ -22,7 +22,7 @@ class Sql {
         return result;
     }
 
-    static async postProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory){
+    static async postProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id){
         var result=[];
 
         var createProjectQuery = genApi.gen("postProject", [ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes]);
@@ -33,13 +33,22 @@ class Sql {
             if (createProjectResponse.rows.length > 0) {
                 result = createProjectResponse.rows[0];
 
-                var query = genApi.gen("createProjectToCategoryMapping", [result.id, ProjectCategory]);
+                var query1 = genApi.gen("createProjectToCategoryMapping", [result.id, ProjectCategory]);
 
-                var responses = await dbApi.multiQuery([query]);
+                var response1 = await dbApi.multiQuery([query1]);
 
-                if (responses.length > 0) {
-                    if (responses[0].rows.length > 0) {
-                        result.ProjectCategory = responses[0].rows[0].id;
+                var query2 = genApi.gen("createProjectToTutorMapping", [result.id,tutor_id]);
+
+                var response2 = await dbApi.multiQuery([query2]);
+
+                if (response1.length > 0) {
+                    if (response1[0].rows.length > 0) {
+                        result.ProjectCategory = response1[0].rows[0].id;
+                    }
+                }
+                if (response2.length > 0) {
+                    if (response2[0].rows.length > 0) {
+                        result.ProjectCategory = response2[0].rows[0].id;
                     }
                 }
             }

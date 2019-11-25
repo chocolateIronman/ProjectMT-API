@@ -18,6 +18,7 @@ exports.postProject = function(args,res,next) {
   var GroupName=args.body.value.GroupName || null;
   var Notes=args.body.value.Notes || null;
   var ProjectCategory=args.body.value.ProjectCategory || null;
+  var tutor_id=args.body.value.tutor_id || null;
 
   database.postProject(
     ProjectName,
@@ -26,7 +27,8 @@ exports.postProject = function(args,res,next) {
     EndDate,
     GroupName,
     Notes,
-    ProjectCategory
+    ProjectCategory,
+    tutor_id
   ).then(
     (result)=>{
       httpUtil.endHttpOK(result,res);
