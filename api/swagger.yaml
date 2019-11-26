@@ -444,7 +444,6 @@ definitions:
      - "EndDate"
      - "DueDate"
      - "Notes"
-     - "ProjectID"
     properties:
       TaskName:
         type: "string"
@@ -456,8 +455,6 @@ definitions:
         type: "integer"
       Notes:
         type: "string"
-      ProjectID:
-        type: "string"
     description: "parameters needed to create a task"
     example:
       TaskName: "name"
@@ -465,4 +462,3 @@ definitions:
       EndDate: "epoch time"
       DueDate: "epoch time"
       Notes: "some notes"
-      ProjectID: "uuid"

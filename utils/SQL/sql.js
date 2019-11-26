@@ -249,7 +249,7 @@ class Sql {
 
     //-------------TASKS---------------
     static async getTasks(project_id){
-        var result=null;
+        var result=[];
         //TODO: pagination
         var parameters=[project_id];
         //single query wrapped in multi query stuff
