@@ -221,7 +221,11 @@ paths:
       - "Category"
       summary: "Loads a list of project categories"
       operationId: "getCategories"
-      parameters: []
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        type: "string"
       responses:
         200:
           description: "Status 200"
@@ -434,7 +438,6 @@ definitions:
         type: "string"
     description: "parameters needed to create a category"
     example:
-      id: "uuid"
       name: "App"
   Task:
     type: "object"

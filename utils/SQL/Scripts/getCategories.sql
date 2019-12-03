@@ -1,1 +1,1 @@
-SELECT * FROM "ProjectCategories"
+SELECT * FROM "ProjectCategories" where  "ProjectCategories".name ilike $1

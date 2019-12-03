@@ -187,13 +187,25 @@ class Sql {
     }
 
     //-----------------CATEGORY---------------------
-    static async getCategories(){
+    static async getCategories(name){
         var result=null;
         //TODO: pagination
-        var parameters=[];
-        //single query wrapped in multi query stuff
-        var query=genApi.gen("getCategories",parameters);
-        var responses=await dbApi.multiQuery([query]);
+        
+        
+        
+
+        if(name==null){
+            var query=genApi.gen("getAllCategories",[]);
+            var responses=await dbApi.multiQuery([query]);
+        }
+        else{
+            name = "%" + name + "%";
+            var parameters=[name];
+            var query=genApi.gen("getCategories",parameters);
+            var responses=await dbApi.multiQuery([query]);
+        }
+        
+        
 
         if(responses[0].rows.length>0){
             result=responses[0].rows;

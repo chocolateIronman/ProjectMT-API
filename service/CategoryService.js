@@ -56,8 +56,10 @@ exports.deleteCategory = function(args,res,next) {
  * no response value expected for this operation
  **/
 exports.getCategories = function(args,res,next) {
+
+  var name=args.name.value || null;
   
-  database.getCategories().then(
+  database.getCategories(name).then(
     (result)=>{
       httpUtil.endHttpOK(result,res);
     }

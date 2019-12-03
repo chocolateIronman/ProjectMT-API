@@ -225,16 +225,16 @@ var deleteTutor = async (tutor_id) => {
 }
 
 //--------------CATEGORY---------------------
-var doGetCategories=async () =>{
+var doGetCategories=async (name) =>{
     var result=null;
-    result=await Sql.getCategories();
+    result=await Sql.getCategories(name);
     return result;
 }
-var getCategories=async()=>{
+var getCategories=async(name)=>{
     var result=null;
     //TODO: Authentication check. Throw error ig not authorized.
     try{
-        result = await doGetCategories();
+        result = await doGetCategories(name);
     }catch(error){
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
