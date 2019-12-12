@@ -11,10 +11,10 @@ var httpUtil = require("../utils/http/http")
 exports.postTask = function(args,res,next) {
   var TaskName=args.body.value.TaskName || null; //match whats in the swagger file
   var StartDate=args.body.value.StartDate || null;
-  var EndDate=args.body.value.EndDate || null;
+  var EndDate= 0;
   var DueDate=args.body.value.DueDate || null;
   var Notes=args.body.value.Notes || null;
-  var ProjectID=args.body.value.ProjectID || null;
+  var ProjectID=args.body.value.projectID || null;
 
   database.postTask(
     TaskName,
