@@ -68,6 +68,14 @@ class Sql {
         if(responses[0].rows.length>0){
             result = responses[0].rows;
         }
+        else{
+            var queryy=genApi.gen("getProject",parameters);
+            var response = await dbApi.multiQuery([queryy]);
+
+            if(response[0].rows.length>0){
+                result = response[0].rows;
+            }
+        }
 
         return result;
     }
