@@ -159,7 +159,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 
   // Provide the security handlers
   app.use(middleware.swaggerSecurity({
-    urbanwild_admin_auth: auth.authorisation_handler
+    projectmt_admin_auth: auth.authorisation_handler
   }));
 
   // Validate Swagger requests
