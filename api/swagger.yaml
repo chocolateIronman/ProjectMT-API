@@ -5,9 +5,9 @@ info:
   version: "1.0.0"
   title: "ProjectMonitoringTool"
   contact: {}
-host: "localhost:8080"
+host: "projectmt.herokuapp.com"
 schemes:
-- "http"
+- "https"
 consumes:
 - "application/json"
 produces:
