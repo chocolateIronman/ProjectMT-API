@@ -67,7 +67,7 @@ auth.initialise(rsaUri);
 
 
 
-
+var spec = fs.readFileSync(path.join(__dirname,'api/swagger.yaml'), 'utf8');
 var swaggerDoc = jsyaml.safeLoad(spec);
 var secDefs = swaggerDoc.securityDefinitions;
 

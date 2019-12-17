@@ -9,7 +9,7 @@ info:
   }
 host: "projectmt.herokuapp.com"
 #host: localhost:8080
-scheme:
+schemes:
 - "https"
 #- 'http'
 consumes:
