@@ -4,10 +4,14 @@ info:
   description: "No description"
   version: "1.0.0"
   title: "ProjectMonitoringTool"
-  contact: {}
-host: "projectmt.herokuapp.com"
+  contact: {
+    email: chocolateironman98@gmail.com
+  }
+#host: "projectmt.herokuapp.com"
+host: localhost:8080
 schemes:
-- "https"
+#- "https"
+- 'http'
 consumes:
 - "application/json"
 produces:
@@ -38,6 +42,11 @@ paths:
               $ref: "#/definitions/Project"
         400:
           description: "Status 400"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Project"
     post:
       tags:
@@ -61,6 +70,11 @@ paths:
             $ref: "#/definitions/Project"
         400:
           description: "The project already exists"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Project"
   /project/{ProjectID}:
     get:
@@ -78,6 +92,11 @@ paths:
           description: "Status 200"
         400:
           description: "Status 400"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Project"
     put:
       tags:
@@ -98,6 +117,13 @@ paths:
       responses:
         200:
           description: "Status 200"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Project"
     delete:
       tags:
@@ -112,6 +138,13 @@ paths:
       responses:
         200:
           description: "Status 200"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Project"
   /tutor:
     get:
@@ -138,6 +171,11 @@ paths:
               $ref: "#/definitions/Tutor"
         400:
           description: "Status 400"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Tutor"
     post:
       tags:
@@ -161,6 +199,11 @@ paths:
             $ref: "#/definitions/Tutor"
         400:
           description: "We already added the tutor"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Tutor"
   /tutor/{TutorID}:
     get:
@@ -178,6 +221,11 @@ paths:
           description: "The tutor exist in the database"
         404:
           description: "The tutor does not match the database"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Tutor"
     put:
       tags:
@@ -200,6 +248,11 @@ paths:
           description: "Status 200"
         400:
           description: "Status 400"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Tutor"
     delete:
       tags:
@@ -214,6 +267,13 @@ paths:
       responses:
         200:
           description: "Status 200"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Tutor"
   /projectCategory:
     get:
@@ -235,6 +295,11 @@ paths:
               $ref: "#/definitions/Category"
         404:
           description: "Status 404"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Category"
     post:
       tags:
@@ -256,6 +321,11 @@ paths:
           description: "The category is created"
         400:
           description: "The category already exists"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Category"
   /projectCategory/{categoryID}:
     get:
@@ -273,6 +343,11 @@ paths:
           description: "The category exists"
         404:
           description: "The category doesn't exist"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Category"
     delete:
       tags:
@@ -287,6 +362,13 @@ paths:
       responses:
         200:
           description: "Status 200"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Category"
   /projectTasks:
     get:
@@ -308,6 +390,11 @@ paths:
               $ref: "#/definitions/Task"
         404:
           description: "Status 404"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Task"
     post:
       tags:
@@ -329,6 +416,11 @@ paths:
           description: "Task successfully created"
         400:
           description: "The task already exists"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Task"
   /projectTasks/{TaskID}:
     get:
@@ -346,6 +438,11 @@ paths:
           description: "The task is found"
         404:
           description: "The task doesn't exist"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Task"
     put:
       tags:
@@ -368,6 +465,11 @@ paths:
           description: "Status 200"
         400:
           description: "Status 400"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Task"
     delete:
       tags:
@@ -382,7 +484,21 @@ paths:
       responses:
         200:
           description: "Status 200"
+        400:
+          description: "Bad Request"
+        401:
+          description: "Unauthorized"
+      security:
+      - projectmt_admin_auth:
+        - "admin"
       x-swagger-router-controller: "Task"
+securityDefinitions:
+  projectmt_admin_auth:
+    type: "oauth2"
+    authorizationUrl: "https://projectmt.eu.auth0.com/authorize"
+    flow: "implicit"
+    scopes:
+      admin: "Full Access"
 definitions:
   Project:
     type: "object"

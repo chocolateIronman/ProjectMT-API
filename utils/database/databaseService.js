@@ -8,7 +8,7 @@ var theConfig = null;
 
 module.exports.initialise = function initialise(url, needsSSL) {
     if (needsSSL === true) {
-        url += "sslmode=require";
+        url += "?sslmode=require";
     }
 
     if (thePool) {

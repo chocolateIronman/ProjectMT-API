@@ -10,8 +10,15 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/index.js",
             "env": {
-                "DATABASE_URL":"postgresql:///lucifer"
+               //"DATABASE_URL":"postgresql:///lucifer"
+               "DATABASE_URL":"postgres://luwuzsygeszyle:494a4d770691a3fcb50343e11651fd8621a512d59fda8b04f51b75cb65c98327@ec2-54-247-82-14.eu-west-1.compute.amazonaws.com:5432/d3lmk0fp5rdr4",
+               "AUTH_CLIENT_ID": "2NIwuFVTSgSCCJw3VnyZKv5uQOsL409t", 
+               "AUTH_APP_NAME": "SwaggerUI", 
+               "AUTH_AUDIENCE": "https://www.projectmt/projectmtadmin",
+               "AUTH_URI": "https://projectmt.eu.auth0.com/authorize",
+               "RSA_URI": "https://projectmt.eu.auth0.com/.well-known/jwks.json"
             }
+
         }
     ]
 }
