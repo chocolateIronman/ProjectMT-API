@@ -132,7 +132,7 @@ var doGetTutors=async ()=>{
 }
 var getTutors=async () =>{
     var result=null;
-    //TODO: Authentication check. Throw error if not authorized.
+    
     try{
         result=await doGetTutors();
     }catch(error){
@@ -151,7 +151,7 @@ var doGetTutor = async (tutor_id) =>{
 var getTutor=async (tutor_id) => {
     var result=null;
 
-    // TODO: Authentication check. Throw error if not authorized.
+    
 
     if(tutor_id===null)throw errorApi.create400Error("Parameter 'tutor_id' is null.");
     
@@ -165,17 +165,17 @@ var getTutor=async (tutor_id) => {
     return result;
 }
 
-var doPostTutor = async(name) => {
+var doPostTutor = async(id) => {
     var result=[];
-    result=await Sql.postTutor(name);
+    result=await Sql.postTutor(id);
     return result;
 }
-var postTutor = async (name) => {
+var postTutor = async (id) => {
     var result=[];
-    if(name===null) throw errorApi.create400Error("Parameter 'name' is null.");
+    if(id===null) throw errorApi.create400Error("Parameter 'id' is null.");
 
     try {
-        result=await doPostTutor(name);
+        result=await doPostTutor(id);
     } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
@@ -184,25 +184,7 @@ var postTutor = async (name) => {
     return result;
 }
 
-var doPutTutor = async(tutor_id,name)=>{
-    var result=null;
-    result=await Sql.putTutor(tutor_id,name);
-    return result;
-}
-var putTutor = async (tutor_id,name) => {
-    var result=null;
-    if(tutor_id===null) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
-    if(name===null) throw errorApi.create400Error("Parameter 'name' is null.");
 
-    try{
-        result=await doPutTutor(tutor_id,name);
-    } catch (error) {
-        console.log(error.message);
-        throw errorApi.create500Error("SQL Error");
-    }
-
-    return result;
-}
 
 var doDeleteTutor = async (tutor_id) => {
     var result = null;
@@ -416,7 +398,6 @@ module.exports = {
     getTutors:getTutors,
     getTutor:getTutor,
     postTutor:postTutor,
-    putTutor:putTutor,
     deleteTutor:deleteTutor,
     getCategories:getCategories,
     getCategory:getCategory,

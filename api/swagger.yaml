@@ -28,11 +28,7 @@ paths:
       - "application/x-yaml"
       - "application/xml"
       - "text/xml"
-      parameters: 
-        - name: "tutorID"
-          in: "query"
-          required: true
-          type: "string"
+      
       responses:
         200:
           description: "Status 200"
@@ -171,11 +167,7 @@ paths:
               $ref: "#/definitions/Tutor"
         400:
           description: "Status 400"
-        401:
-          description: "Unauthorized"
-      security:
-      - projectmt_admin_auth:
-        - "admin"
+        
       x-swagger-router-controller: "Tutor"
     post:
       tags:
@@ -186,12 +178,7 @@ paths:
       - "application/json"
       produces:
       - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/Tutor"
+     
       responses:
         200:
           description: "We added the tutor"
@@ -221,39 +208,9 @@ paths:
           description: "The tutor exist in the database"
         404:
           description: "The tutor does not match the database"
-        401:
-          description: "Unauthorized"
-      security:
-      - projectmt_admin_auth:
-        - "admin"
+        
       x-swagger-router-controller: "Tutor"
-    put:
-      tags:
-      - "Tutor"
-      summary: "Stores a tutor"
-      operationId: "putTutor"
-      parameters:
-      - name: "TutorID"
-        in: "path"
-        required: true
-        type: "string"
-
-      - in: "body"
-        name: "body"
-        required: true
-        schema:
-          $ref: "#/definitions/Tutor"
-      responses:
-        200:
-          description: "Status 200"
-        400:
-          description: "Status 400"
-        401:
-          description: "Unauthorized"
-      security:
-      - projectmt_admin_auth:
-        - "admin"
-      x-swagger-router-controller: "Tutor"
+    
     delete:
       tags:
       - "Tutor"
@@ -269,11 +226,7 @@ paths:
           description: "Status 200"
         400:
           description: "Bad Request"
-        401:
-          description: "Unauthorized"
-      security:
-      - projectmt_admin_auth:
-        - "admin"
+        
       x-swagger-router-controller: "Tutor"
   /projectCategory:
     get:
@@ -530,21 +483,21 @@ definitions:
       ProjectName: "name"
       ProjectCategory: "uuid"
       ProjectYear: 1
-      StartDate: "22/12/2222"
-      EndDate: "12/12/3333"
+      StartDate: 123
+      EndDate: 123
       GroupName: "name"
       Notes: "some notes"
   Tutor:
     type: "object"
     required:
-    - "name"
+    - "id"
     properties:
-      name:
+      id:
         type: "string"
     description: "Parameters required for tutor"
     example:
       id: "uuid"
-      name: "Max"
+      
   Category:
     type: "object"
     required:
@@ -577,7 +530,7 @@ definitions:
     description: "parameters needed to create a task"
     example:
       TaskName: "name"
-      StartDate: "epoch time"
-      EndDate: "epoch time"
-      DueDate: "epoch time"
+      StartDate: 123
+      EndDate: 123
+      DueDate: 123
       Notes: "some notes"

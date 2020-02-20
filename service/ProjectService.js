@@ -3,6 +3,7 @@
 var database = require("../utils/data/data");
 var errorApi = require("../utils/error");
 var httpUtil = require("../utils/http/http");
+var auth = require("../utils/authentication");
 
 /**
  * Adds a project
@@ -18,7 +19,8 @@ exports.postProject = function(args,res,next) {
   var GroupName=args.body.value.GroupName || null;
   var Notes=args.body.value.Notes || null;
   var ProjectCategory=args.body.value.ProjectCategory || null;
-  var tutor_id=args.body.value.tutor_id || null;
+  
+  var tutor_id=auth.getHeaderInfo(res.socket.parser.incoming);
 
   database.postProject(
     ProjectName,
@@ -133,7 +135,7 @@ exports.getProjects = function(args, res, next) {
   
   // TODO: Create authentication scope info object and pass to database API method below.
 
-  var tutor_id = args.tutorID.value || null; // match whats in the swagger file
+  var tutor_id = auth.getHeaderInfo(res.socket.parser.incoming);
 
   database.getProjectsForTutor(
     tutor_id

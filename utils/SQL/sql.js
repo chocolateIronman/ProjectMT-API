@@ -144,14 +144,25 @@ class Sql {
 
         if(responses[0].rows.length>0){
             result=responses[0].rows;
+        } else{
+           
+                var query=genApi.gen("postTutor",parameters);
+                var responses=await dbApi.multiQuery([query]);
+        
+                if(responses[0].rows.length>0){
+                    result=responses[0].rows;
+                }
+        
+                return result;
+            
         }
 
         return result;
     }
 
-    static async postTutor(name){
+    static async postTutor(tutor_id){
         var result=[];
-        var parameters=[name];
+        var parameters=[tutor_id];
 
         //single query wrapped in multi query stuff
         var query=genApi.gen("postTutor",parameters);
@@ -164,20 +175,7 @@ class Sql {
         return result;
     }
 
-    static async putTutor(tutor_id,name) {
-        var result=null;
-        var parameters = [tutor_id, name];
-
-        //single query wrapped in multi query stuff
-        var query=genApi.gen("putTutor",parameters);
-        var responses= await dbApi.multiQuery([query]);
-
-        if(responses[0].rows.length>0) {
-            result =responses[0].rows;
-        }
-
-        return result;
-    }
+    
 
     static async deleteTutor(tutor_id){
         var result=null;

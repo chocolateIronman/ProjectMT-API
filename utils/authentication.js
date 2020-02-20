@@ -42,6 +42,8 @@ var get_access_token = function (req) {
     return token;
 }
 
+
+
 // attempt to verify the RSA signature of the access token, and then decode it.
 var validate_RSA_access_token = function (token, kid, callback) {
     jwks_client.getSigningKey(kid, (err, key) => {
@@ -92,7 +94,7 @@ var authorisation_handler = function (req, def, scopes, callback) {
     if (access_token) {
         // the access token is JWT - Base64 encoded, with signature
         var decoded_token = libjwt.decode(access_token, { complete: true });
-
+        
         if (decoded_token) {
             if (decoded_token.header.alg == supported_algorithms.rsa) {
                 // the authorizing authority has defined the API as requiring RSA security
@@ -118,6 +120,9 @@ var authorisation_handler = function (req, def, scopes, callback) {
             } else {
                 callback(error.create401Error("unsupported JWT algorithm"));
             }
+
+           
+
         } else {
             callback(error.create401Error("could not decode token"));
         }
@@ -126,9 +131,22 @@ var authorisation_handler = function (req, def, scopes, callback) {
     }
 }
 
+var getHeaderInfo = function(req){
+    var tutorid=null;
+    var access_token=get_access_token(req);
+    if(access_token){
+        var decoded_token=libjwt.decode(access_token, {complete : true});
+        if(decoded_token){
+            tutorid=decoded_token.payload.sub;
+        }
+    }
+    return tutorid;
+}
+
 
 module.exports = {
     SUPPORTED_SCOPES: supportedScopes,
     initialise: initialise,
-    authorisation_handler: authorisation_handler
+    authorisation_handler: authorisation_handler,
+    getHeaderInfo:getHeaderInfo
 };

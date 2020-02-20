@@ -2,7 +2,8 @@
 
 var database = require("../utils/data/data");
 var errorApi = require("../utils/error");
-var httpUtil = require("../utils/http/http")
+var httpUtil = require("../utils/http/http");
+var auth=require("../utils/authentication");
 
 /**
  * Adds a tutor
@@ -12,10 +13,11 @@ var httpUtil = require("../utils/http/http")
  **/
 exports.postTutor = function(args,res,next) {
   
-  var name=args.body.value.name || null; //match whats in the swagger file
+  var tutorid=auth.getHeaderInfo(res.socket.parser.incoming);
+  
 
   database.postTutor(
-    name
+    tutorid
   ).then(
     (result) => {
       httpUtil.endHttpOK(result,res);
