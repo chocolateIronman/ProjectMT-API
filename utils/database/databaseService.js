@@ -1,5 +1,7 @@
 "use strict";
 
+//generic code for executing queries
+
 var {Pool} = require("pg");
 var errorApi = require("../error");
 

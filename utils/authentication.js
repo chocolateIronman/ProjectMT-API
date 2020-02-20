@@ -31,7 +31,7 @@ var initialise = function (rsa_uri) {
 
 };
 
-
+//getting an access token 
 var get_access_token = function (req) {
     var authHeader = req.headers.authorization;
     var auth = authParser.parse(authHeader);
@@ -63,7 +63,7 @@ var validate_RSA_access_token = function (token, kid, callback) {
 }
 
 
-
+//checking for an auth scope
 var hasAuthorisedScope = function (scopeString, authorisedScopes) {
     var result = true;
     if (scopeString && scopeString.length > 0) {
@@ -131,6 +131,7 @@ var authorisation_handler = function (req, def, scopes, callback) {
     }
 }
 
+//getting the needed  tutor ID and access token
 var getHeaderInfo = function(req){
     var tutorid=null;
     var access_token=get_access_token(req);

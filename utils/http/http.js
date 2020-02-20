@@ -2,6 +2,8 @@
 
 var errorApi = require("../error");
 
+//HTTP end points
+
 var endHttpOK = (result, response) => {
     var params = {};
     params["application/json"] = result;

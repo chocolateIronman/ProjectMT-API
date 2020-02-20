@@ -6,6 +6,8 @@
 var Sql = require("../SQL/sql");
 var errorApi = require("../error");
 
+//Getting projects allocated to a specific tutor based on their tutor ID
+
 var doGetProjectsForTutor = async (tutor_id) => {
     var result = null;
     result = await Sql.getProjectsForTutor(tutor_id);
@@ -14,7 +16,7 @@ var doGetProjectsForTutor = async (tutor_id) => {
 var getProjectsForTutor = async (tutor_id) => {
     var result = null;
 
-    // TODO: Authentication check. Throw error if not authorized.
+
 
     if (tutor_id === null) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
 
@@ -28,15 +30,18 @@ var getProjectsForTutor = async (tutor_id) => {
     return result;
 };
 
+//function to check if a parameter is either undefined or null
 function isEmpty(param) {
     return param === undefined || param === null;
 }
 
+//Creating new projects
 var doPostProject = async (ProjectName, ProjectYear, StartDate, EndDate, GroupName, Notes, ProjectCategory, tutor_id) => {
     var result = [];
     result = await Sql.postProject(ProjectName, ProjectYear, StartDate, EndDate, GroupName, Notes, ProjectCategory, tutor_id);
     return result;
 }
+//checking if all the required parameters are valid
 var postProject = async (ProjectName, ProjectYear, StartDate, EndDate, GroupName, Notes, ProjectCategory, tutor_id) => {
     var result = [];
     if (isEmpty(ProjectName)) throw errorApi.create400Error("Parameter 'ProjectName' is null.");
@@ -58,6 +63,7 @@ var postProject = async (ProjectName, ProjectYear, StartDate, EndDate, GroupName
     return result;
 }
 
+//Getting a specific project based on their project ID
 var doGetProject = async (project_id) => {
     var result = null;
     result = await Sql.getProject(project_id);
@@ -66,6 +72,7 @@ var doGetProject = async (project_id) => {
 var getProject = async (project_id) => {
     var result = null;
 
+    //verification of the required parameter
     if (isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
 
     try {
@@ -78,11 +85,13 @@ var getProject = async (project_id) => {
     return result;
 }
 
+//Updating an existing project
 var doPutProject = async (project_id, ProjectName, ProjectCategory, ProjectYear, StartDate, EndDate, GroupName, Notes) => {
     var result = null;
     result = await Sql.putProject(project_id, ProjectName, ProjectCategory, ProjectYear, StartDate, EndDate, GroupName, Notes);
     return result;
 }
+//verification of all the required parameters
 var putProject = async (project_id, ProjectName, ProjectCategory, ProjectYear, StartDate, EndDate, GroupName, Notes) => {
     var result = null;
     if (isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
@@ -104,11 +113,13 @@ var putProject = async (project_id, ProjectName, ProjectCategory, ProjectYear, S
     return result;
 }
 
+//Deleting a project based on its ID
 var doDeleteProject = async (project_id) => {
     var result = null;
     result = await Sql.deleteProject(project_id);
     return result;
 }
+//verification of the requested parameter
 var deleteProject = async (project_id) => {
     var result = null;
 
@@ -125,6 +136,7 @@ var deleteProject = async (project_id) => {
 }
 
 //-------------------TUTOR---------------------
+//Getting a list of all tutors
 var doGetTutors = async () => {
     var result = null;
     result = await Sql.getTutors();
@@ -143,6 +155,7 @@ var getTutors = async () => {
     return result;
 }
 
+//Getting a specific tutor based on their tutor ID
 var doGetTutor = async (tutor_id) => {
     var result = null;
     result = await Sql.getTutor(tutor_id);
@@ -152,7 +165,7 @@ var getTutor = async (tutor_id) => {
     var result = null;
 
 
-
+//verification of the required parameter
     if (tutor_id === null) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
 
     try {
@@ -165,11 +178,13 @@ var getTutor = async (tutor_id) => {
     return result;
 }
 
+//Creating new tutor account only saving a tutor ID
 var doPostTutor = async (id) => {
     var result = [];
     result = await Sql.postTutor(id);
     return result;
 }
+//verification of the required parameter
 var postTutor = async (id) => {
     var result = [];
     if (id === null) throw ("Parameter 'id' is null.");
@@ -181,7 +196,7 @@ var postTutor = async (id) => {
 }
 
 
-
+//deleting an account of tutor
 var doDeleteTutor = async (tutor_id) => {
     var result = null;
     result = await Sql.deleteTutor(tutor_id);
@@ -189,7 +204,7 @@ var doDeleteTutor = async (tutor_id) => {
 }
 var deleteTutor = async (tutor_id) => {
     var result = null;
-
+//verification of required parameter
     if (tutor_id === null) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
 
     try {
@@ -203,6 +218,7 @@ var deleteTutor = async (tutor_id) => {
 }
 
 //--------------CATEGORY---------------------
+//Getting all categories
 var doGetCategories = async (name) => {
     var result = null;
     result = await Sql.getCategories(name);
@@ -220,7 +236,7 @@ var getCategories = async (name) => {
 
     return result;
 }
-
+//Getting a specific category
 var doGetCategory = async (category_id) => {
     var result = null;
     result = await Sql.getCategory(category_id);
@@ -240,7 +256,7 @@ var getCategory = async (category_id) => {
 
     return result;
 }
-
+//creating new category
 var doPostCategory = async (name) => {
     var result = [];
     result = await Sql.postCategory(name);
@@ -259,7 +275,7 @@ var postCategory = async (name) => {
 
     return result;
 }
-
+//deleting an existing vcategory
 var doDeleteCategory = async (category_id) => {
     var result = null;
     result = await Sql.deleteCategory(category_id);
@@ -282,6 +298,7 @@ var deleteCategory = async (category_id) => {
 }
 
 //----------------TASKS-------------------------
+//Getting a list of tasks associated with a specific project
 var doGetTasks = async (project_id) => {
     var result = null;
     result = await Sql.getTasks(project_id);
@@ -302,6 +319,7 @@ var getTasks = async (project_id) => {
     return result;
 }
 
+//getting a specific task based on its ID
 var doGetTask = async (task_id) => {
     var result = null;
     result = await Sql.getTask(task_id);
@@ -322,6 +340,7 @@ var getTask = async (task_id) => {
     return result;
 }
 
+//creating a new task for a specific project
 var doPostTask = async (TaskName, StartDate, DueDate, EndDate, Notes, ProjectID) => {
     var result = [];
     result = await Sql.postTask(TaskName, StartDate, DueDate, EndDate, Notes, ProjectID);
@@ -346,6 +365,7 @@ var postTask = async (TaskName, StartDate, EndDate, DueDate, Notes, ProjectID) =
     return result;
 }
 
+//updating an existing task based on its ID
 var doPutTask = async (task_id, TaskName, StartDate, EndDate, DueDate, Notes) => {
     var result = null;
     result = await Sql.putTask(task_id, TaskName, StartDate, EndDate, DueDate, Notes);
@@ -369,6 +389,7 @@ var putTask = async (task_id, TaskName, StartDate, EndDate, DueDate, Notes) => {
     return result;
 }
 
+//deleting an existing task
 var doDeleteTask = async (task_id) => {
     var result = null;
     result = await Sql.deleteTask(task_id);

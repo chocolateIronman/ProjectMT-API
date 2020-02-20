@@ -1,5 +1,5 @@
 'use strict'
-
+//HTTP and SQL Error messages
 module.exports = {
 
     createError: (code, message) => {
