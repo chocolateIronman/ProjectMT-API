@@ -32,13 +32,13 @@ function isEmpty(param) {
     return param === undefined || param === null;
 }
 
-var doPostProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id)=>{
-    var result=[];
-    result=await Sql.postProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id);
+var doPostProject = async (ProjectName, ProjectYear, StartDate, EndDate, GroupName, Notes, ProjectCategory, tutor_id) => {
+    var result = [];
+    result = await Sql.postProject(ProjectName, ProjectYear, StartDate, EndDate, GroupName, Notes, ProjectCategory, tutor_id);
     return result;
 }
-var postProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id)=>{
-    var result=[];
+var postProject = async (ProjectName, ProjectYear, StartDate, EndDate, GroupName, Notes, ProjectCategory, tutor_id) => {
+    var result = [];
     if (isEmpty(ProjectName)) throw errorApi.create400Error("Parameter 'ProjectName' is null.");
     if (isEmpty(ProjectYear)) throw errorApi.create400Error("Parameter 'ProjectYear' is null.");
     if (isEmpty(StartDate)) throw errorApi.create400Error("Parameter 'StartDate' is null.");
@@ -48,9 +48,9 @@ var postProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,
     if (isEmpty(ProjectCategory)) throw errorApi.create400Error("Parameter 'ProjectCategory' is null.");
     if (isEmpty(tutor_id)) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
 
-    try{
-        result=await doPostProject(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,ProjectCategory,tutor_id);
-    }catch(error){
+    try {
+        result = await doPostProject(ProjectName, ProjectYear, StartDate, EndDate, GroupName, Notes, ProjectCategory, tutor_id);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -58,19 +58,19 @@ var postProject=async(ProjectName,ProjectYear,StartDate,EndDate,GroupName,Notes,
     return result;
 }
 
-var doGetProject = async (project_id)=>{
+var doGetProject = async (project_id) => {
     var result = null;
     result = await Sql.getProject(project_id);
     return result;
 }
-var getProject = async(project_id)=>{
+var getProject = async (project_id) => {
     var result = null;
 
-    if(isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
+    if (isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
 
-    try{
+    try {
         result = await doGetProject(project_id);
-    } catch(error){
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -78,14 +78,14 @@ var getProject = async(project_id)=>{
     return result;
 }
 
-var doPutProject = async(project_id,ProjectName,ProjectCategory,ProjectYear,StartDate,EndDate,GroupName,Notes)=>{
+var doPutProject = async (project_id, ProjectName, ProjectCategory, ProjectYear, StartDate, EndDate, GroupName, Notes) => {
     var result = null;
-    result = await Sql.putProject(project_id,ProjectName,ProjectCategory,ProjectYear,StartDate,EndDate,GroupName,Notes);
+    result = await Sql.putProject(project_id, ProjectName, ProjectCategory, ProjectYear, StartDate, EndDate, GroupName, Notes);
     return result;
 }
-var putProject = async(project_id,ProjectName,ProjectCategory,ProjectYear,StartDate,EndDate,GroupName,Notes)=>{
+var putProject = async (project_id, ProjectName, ProjectCategory, ProjectYear, StartDate, EndDate, GroupName, Notes) => {
     var result = null;
-    if(isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
+    if (isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
     if (isEmpty(ProjectName)) throw errorApi.create400Error("Parameter 'ProjectName' is null.");
     if (isEmpty(ProjectCategory)) throw errorApi.create400Error("Parameter 'ProjectCategory' is null.");
     if (isEmpty(ProjectYear)) throw errorApi.create400Error("Parameter 'ProjectYear' is null.");
@@ -94,9 +94,9 @@ var putProject = async(project_id,ProjectName,ProjectCategory,ProjectYear,StartD
     if (isEmpty(GroupName)) throw errorApi.create400Error("Parameter 'GroupName' is null.");
     if (isEmpty(Notes)) throw errorApi.create400Error("Parameter 'Notes' is null.");
 
-    try{
-        result = await doPutProject(project_id,ProjectName,ProjectCategory,ProjectYear,StartDate,EndDate,GroupName,Notes);
-    } catch(error){
+    try {
+        result = await doPutProject(project_id, ProjectName, ProjectCategory, ProjectYear, StartDate, EndDate, GroupName, Notes);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -104,19 +104,19 @@ var putProject = async(project_id,ProjectName,ProjectCategory,ProjectYear,StartD
     return result;
 }
 
-var doDeleteProject = async(project_id)=>{
+var doDeleteProject = async (project_id) => {
     var result = null;
     result = await Sql.deleteProject(project_id);
     return result;
 }
-var deleteProject = async(project_id)=>{
+var deleteProject = async (project_id) => {
     var result = null;
 
-    if(isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
+    if (isEmpty(project_id)) throw errorApi.create400Error("Parameter 'project_id' is null.");
 
-    try{
+    try {
         result = await doDeleteProject(project_id);
-    }catch(error){
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -125,61 +125,57 @@ var deleteProject = async(project_id)=>{
 }
 
 //-------------------TUTOR---------------------
-var doGetTutors=async ()=>{
-    var result=null;
-    result=await Sql.getTutors();
+var doGetTutors = async () => {
+    var result = null;
+    result = await Sql.getTutors();
     return result;
 }
-var getTutors=async () =>{
-    var result=null;
-    
-    try{
-        result=await doGetTutors();
-    }catch(error){
-        console.log(error.message);
-        throw errorApi.create500Error("SQL Error");
-    }
-
-    return result;
-}
-
-var doGetTutor = async (tutor_id) =>{ 
-    var result=null;
-    result=await Sql.getTutor(tutor_id);
-    return result;
-}
-var getTutor=async (tutor_id) => {
-    var result=null;
-
-    
-
-    if(tutor_id===null)throw errorApi.create400Error("Parameter 'tutor_id' is null.");
-    
-    try{
-        result = await doGetTutor(tutor_id);
-    }catch(error){
-        console.log(error.message);
-        throw errorApi.create500Error("SQL Error");
-    }
-
-    return result;
-}
-
-var doPostTutor = async(id) => {
-    var result=[];
-    result=await Sql.postTutor(id);
-    return result;
-}
-var postTutor = async (id) => {
-    var result=[];
-    if(id===null) throw errorApi.create400Error("Parameter 'id' is null.");
+var getTutors = async () => {
+    var result = null;
 
     try {
-        result=await doPostTutor(id);
+        result = await doGetTutors();
     } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
+
+    return result;
+}
+
+var doGetTutor = async (tutor_id) => {
+    var result = null;
+    result = await Sql.getTutor(tutor_id);
+    return result;
+}
+var getTutor = async (tutor_id) => {
+    var result = null;
+
+
+
+    if (tutor_id === null) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
+
+    try {
+        result = await doGetTutor(tutor_id);
+    } catch (error) {
+        console.log(error.message);
+        throw errorApi.create500Error("SQL Error");
+    }
+
+    return result;
+}
+
+var doPostTutor = async (id) => {
+    var result = [];
+    result = await Sql.postTutor(id);
+    return result;
+}
+var postTutor = async (id) => {
+    var result = [];
+    if (id === null) throw ("Parameter 'id' is null.");
+
+
+    result = await doPostTutor(id);
 
     return result;
 }
@@ -194,11 +190,11 @@ var doDeleteTutor = async (tutor_id) => {
 var deleteTutor = async (tutor_id) => {
     var result = null;
 
-    if(tutor_id===null) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
+    if (tutor_id === null) throw errorApi.create400Error("Parameter 'tutor_id' is null.");
 
-    try{
+    try {
         result = await doDeleteTutor(tutor_id);
-    } catch(error){
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -207,17 +203,17 @@ var deleteTutor = async (tutor_id) => {
 }
 
 //--------------CATEGORY---------------------
-var doGetCategories=async (name) =>{
-    var result=null;
-    result=await Sql.getCategories(name);
+var doGetCategories = async (name) => {
+    var result = null;
+    result = await Sql.getCategories(name);
     return result;
 }
-var getCategories=async(name)=>{
-    var result=null;
+var getCategories = async (name) => {
+    var result = null;
     //TODO: Authentication check. Throw error ig not authorized.
-    try{
+    try {
         result = await doGetCategories(name);
-    }catch(error){
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -225,19 +221,19 @@ var getCategories=async(name)=>{
     return result;
 }
 
-var doGetCategory = async (category_id) =>{
-    var result=null;
-    result=await Sql.getCategory(category_id);
+var doGetCategory = async (category_id) => {
+    var result = null;
+    result = await Sql.getCategory(category_id);
     return result;
 }
-var getCategory=async(category_id)=>{
+var getCategory = async (category_id) => {
     var result = null;
 
-    if(category_id===null)throw errorApi.create400Error("Parameter 'category_id' is null.");
+    if (category_id === null) throw errorApi.create400Error("Parameter 'category_id' is null.");
 
-    try{
-        result=await doGetCategory(category_id);
-    }catch(error){
+    try {
+        result = await doGetCategory(category_id);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -245,16 +241,16 @@ var getCategory=async(category_id)=>{
     return result;
 }
 
-var doPostCategory = async(name) => {
-    var result=[];
+var doPostCategory = async (name) => {
+    var result = [];
     result = await Sql.postCategory(name);
     return result;
 }
-var postCategory = async(name) => {
+var postCategory = async (name) => {
     var result = [];
-    if(name===null) throw errorApi.create400Error("Parameter 'name' is null.");
+    if (name === null) throw errorApi.create400Error("Parameter 'name' is null.");
 
-    try{
+    try {
         result = await doPostCategory(name);
     } catch (error) {
         console.log(error.message);
@@ -265,16 +261,16 @@ var postCategory = async(name) => {
 }
 
 var doDeleteCategory = async (category_id) => {
-    var result=null;
+    var result = null;
     result = await Sql.deleteCategory(category_id);
     return result;
 }
 var deleteCategory = async (category_id) => {
-    var result= null;
+    var result = null;
 
-    if(category_id===null) throw errorApi.create400Error("Parameter 'category_id' is null.");
+    if (category_id === null) throw errorApi.create400Error("Parameter 'category_id' is null.");
 
-    try{
+    try {
         result = await doDeleteCategory(category_id);
     } catch (error) {
         console.log(error.message);
@@ -286,19 +282,19 @@ var deleteCategory = async (category_id) => {
 }
 
 //----------------TASKS-------------------------
-var doGetTasks=async(project_id)=>{
-    var result=null;
-    result=await Sql.getTasks(project_id);
+var doGetTasks = async (project_id) => {
+    var result = null;
+    result = await Sql.getTasks(project_id);
     return result;
 }
-var getTasks=async(project_id)=>{
-    var result=null;
+var getTasks = async (project_id) => {
+    var result = null;
 
-    if(project_id===null)throw errorApi.create400Error("Parameter 'project_id' is null.");
+    if (project_id === null) throw errorApi.create400Error("Parameter 'project_id' is null.");
 
-    try{
-        result=await doGetTasks(project_id);
-    }catch(error){
+    try {
+        result = await doGetTasks(project_id);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -306,19 +302,19 @@ var getTasks=async(project_id)=>{
     return result;
 }
 
-var doGetTask=async(task_id)=>{
-    var result=null;
-    result=await Sql.getTask(task_id);
+var doGetTask = async (task_id) => {
+    var result = null;
+    result = await Sql.getTask(task_id);
     return result;
 }
-var getTask=async(task_id)=>{
-    var result=null;
+var getTask = async (task_id) => {
+    var result = null;
 
-    if(task_id===null)throw errorApi.create400Error("Parameter 'task_id' is null.");
+    if (task_id === null) throw errorApi.create400Error("Parameter 'task_id' is null.");
 
-    try{
-        result=await doGetTask(task_id);
-    }catch(error){
+    try {
+        result = await doGetTask(task_id);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -326,23 +322,23 @@ var getTask=async(task_id)=>{
     return result;
 }
 
-var doPostTask=async(TaskName,StartDate,DueDate,EndDate,Notes,ProjectID)=>{
-    var result=[];
-    result=await Sql.postTask(TaskName,StartDate,DueDate,EndDate,Notes,ProjectID);
+var doPostTask = async (TaskName, StartDate, DueDate, EndDate, Notes, ProjectID) => {
+    var result = [];
+    result = await Sql.postTask(TaskName, StartDate, DueDate, EndDate, Notes, ProjectID);
     return result;
 }
-var postTask=async(TaskName,StartDate,EndDate,DueDate,Notes,ProjectID)=>{
-    var result=[];
-    if(isEmpty(TaskName))throw errorApi.create400Error("Parameter 'TaskName' is null.");
-    if(isEmpty(StartDate))throw errorApi.create400Error("Parameter 'StartDate' is null.");
-    if(isEmpty(DueDate))throw errorApi.create400Error("Parameter 'DueDate' is null.");
-    if(isEmpty(EndDate))throw errorApi.create400Error("Parameter 'EndDate' is null.");
-    if(isEmpty(Notes))throw errorApi.create400Error("Parameter 'Notes' is null.");
-    if(isEmpty(ProjectID)) throw errorApi.create400Error("Parameter 'ProjectID' is null.");
+var postTask = async (TaskName, StartDate, EndDate, DueDate, Notes, ProjectID) => {
+    var result = [];
+    if (isEmpty(TaskName)) throw errorApi.create400Error("Parameter 'TaskName' is null.");
+    if (isEmpty(StartDate)) throw errorApi.create400Error("Parameter 'StartDate' is null.");
+    if (isEmpty(DueDate)) throw errorApi.create400Error("Parameter 'DueDate' is null.");
+    if (isEmpty(EndDate)) throw errorApi.create400Error("Parameter 'EndDate' is null.");
+    if (isEmpty(Notes)) throw errorApi.create400Error("Parameter 'Notes' is null.");
+    if (isEmpty(ProjectID)) throw errorApi.create400Error("Parameter 'ProjectID' is null.");
 
-    try{
-        result=await doPostTask(TaskName,StartDate,EndDate,DueDate,Notes,ProjectID);
-    }catch(error){
+    try {
+        result = await doPostTask(TaskName, StartDate, EndDate, DueDate, Notes, ProjectID);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -350,42 +346,42 @@ var postTask=async(TaskName,StartDate,EndDate,DueDate,Notes,ProjectID)=>{
     return result;
 }
 
-var doPutTask=async(task_id,TaskName,StartDate,EndDate,DueDate,Notes)=>{
-    var result=null;
-    result=await Sql.putTask(task_id,TaskName,StartDate,EndDate,DueDate,Notes);
+var doPutTask = async (task_id, TaskName, StartDate, EndDate, DueDate, Notes) => {
+    var result = null;
+    result = await Sql.putTask(task_id, TaskName, StartDate, EndDate, DueDate, Notes);
     return result;
 }
-var putTask=async(task_id,TaskName,StartDate,EndDate,DueDate,Notes)=>{
-    var result=null;
-    if(task_id===null)throw errorApi.create400Error("Parameter 'task_id' is null.");
-    if(TaskName===null)throw errorApi.create400Error("Parameter 'TaskName' is null.");
-    if(StartDate===null)throw errorApi.create400Error("Parameter 'StartDate' is null.");
-    if(DueDate===null)throw errorApi.create400Error("Parameter 'DueDate' is null.");
-    if(EndDate===null)throw errorApi.create400Error("Parameter 'EndDate' is null.");
-    if(Notes===null)throw errorApi.create400Error("Parameter 'Notes' is null.");
+var putTask = async (task_id, TaskName, StartDate, EndDate, DueDate, Notes) => {
+    var result = null;
+    if (task_id === null) throw errorApi.create400Error("Parameter 'task_id' is null.");
+    if (TaskName === null) throw errorApi.create400Error("Parameter 'TaskName' is null.");
+    if (StartDate === null) throw errorApi.create400Error("Parameter 'StartDate' is null.");
+    if (DueDate === null) throw errorApi.create400Error("Parameter 'DueDate' is null.");
+    if (EndDate === null) throw errorApi.create400Error("Parameter 'EndDate' is null.");
+    if (Notes === null) throw errorApi.create400Error("Parameter 'Notes' is null.");
 
-    try{
-        result = await doPutTask(task_id,TaskName,StartDate,EndDate,DueDate,Notes);
-    }catch(error){
+    try {
+        result = await doPutTask(task_id, TaskName, StartDate, EndDate, DueDate, Notes);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
     return result;
 }
 
-var doDeleteTask=async(task_id)=>{
-    var result=null;
-    result=await Sql.deleteTask(task_id);
+var doDeleteTask = async (task_id) => {
+    var result = null;
+    result = await Sql.deleteTask(task_id);
     return result;
 }
-var deleteTask=async(task_id)=>{
-    var result=null;
+var deleteTask = async (task_id) => {
+    var result = null;
 
-    if(task_id===null)throw errorApi.create400Error("Parameter 'task_id' is null.");
+    if (task_id === null) throw errorApi.create400Error("Parameter 'task_id' is null.");
 
-    try{
-        result=await doDeleteTask(task_id);
-    }catch(error){
+    try {
+        result = await doDeleteTask(task_id);
+    } catch (error) {
         console.log(error.message);
         throw errorApi.create500Error("SQL Error");
     }
@@ -394,23 +390,23 @@ var deleteTask=async(task_id)=>{
 }
 
 module.exports = {
-   
-    getTutors:getTutors,
-    getTutor:getTutor,
-    postTutor:postTutor,
-    deleteTutor:deleteTutor,
-    getCategories:getCategories,
-    getCategory:getCategory,
-    postCategory:postCategory,
-    deleteCategory:deleteCategory,
-    getTasks:getTasks,
-    getTask:getTask,
-    postTask:postTask,
-    putTask:putTask,
-    deleteTask:deleteTask,
+
+    getTutors: getTutors,
+    getTutor: getTutor,
+    postTutor: postTutor,
+    deleteTutor: deleteTutor,
+    getCategories: getCategories,
+    getCategory: getCategory,
+    postCategory: postCategory,
+    deleteCategory: deleteCategory,
+    getTasks: getTasks,
+    getTask: getTask,
+    postTask: postTask,
+    putTask: putTask,
+    deleteTask: deleteTask,
     getProjectsForTutor: getProjectsForTutor,
-    postProject:postProject,
-    getProject:getProject,
-    putProject:putProject,
-    deleteProject:deleteProject
+    postProject: postProject,
+    getProject: getProject,
+    putProject: putProject,
+    deleteProject: deleteProject
 }

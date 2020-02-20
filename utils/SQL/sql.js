@@ -166,11 +166,18 @@ class Sql {
 
         //single query wrapped in multi query stuff
         var query=genApi.gen("postTutor",parameters);
-        var responses=await dbApi.multiQuery([query]);
-
-        if(responses[0].rows.length>0){
-            result=responses[0].rows;
+        var responses=null;
+        try{
+            responses=await dbApi.multiQuery([query]);
+        } catch(e){
+            throw("User exists!");
         }
+       
+
+       
+        result=responses[0].rows[0];
+        
+        
 
         return result;
     }

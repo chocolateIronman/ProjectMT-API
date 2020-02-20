@@ -22,6 +22,13 @@ module.exports = {
         return result;
     },
 
+    create409Error:(message) => {
+        var result ={};
+        result.statusCode = 409;
+        result.message = "Conflict: " + message;
+        return result;
+    },
+
     createNotYetImplemented: (message) => {
         var result = {};
         result.statusCode = 500;

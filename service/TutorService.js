@@ -24,8 +24,10 @@ exports.postTutor = function(args,res,next) {
     }
   ).catch(
     (error) => {
+      error=errorApi.create409Error(error);
       httpUtil.endHttpErr(error,res);
     }
+    
   )
 }
 

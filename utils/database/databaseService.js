@@ -41,7 +41,8 @@ module.exports.multiQuery = async function multiQuery(queries) {
     } catch (err) {
         await client.query("ROLLBACK");
         console.log(err);
-        throw errorApi.create500Error("SQL Error");
+        
+        throw ("SQL Error");
     } finally {
         client.release();
     }

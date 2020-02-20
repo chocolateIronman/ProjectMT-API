@@ -7,11 +7,11 @@ info:
   contact: {
     email: "chocolateironman98@gmail.com"
   }
-host: "projectmt.herokuapp.com"
-#host: localhost:8080
+#host: "projectmt.herokuapp.com"
+host: localhost:8080
 schemes:
-- "https"
-#- 'http'
+#- "https"
+- 'http'
 consumes:
 - "application/json"
 produces:
