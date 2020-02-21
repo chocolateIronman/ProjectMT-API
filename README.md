@@ -13,6 +13,8 @@ npm start
 To view the Swagger UI interface as the Project is hosted on Heroku go 
 [HERE](https://projectmt.herokuapp.com/docs/#/)
 ## Note! 
+```
 To access the different end points you need to log in or sign up with Auth0 account
+```
 
 This project leverages the mega-awesome [swagger-tools](https://github.com/apigee-127/swagger-tools) middleware which does most all the work.
